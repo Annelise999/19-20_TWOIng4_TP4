@@ -1,3 +1,10 @@
+// Clé api
+const API_KEY = "ce8d921f";
+// Url API
+const API_URL = "http://www.omdbapi.com/";
+
+
+
 // Load the full build.
 var _ = require('lodash');
 
@@ -34,15 +41,15 @@ router.get('/:id', (req, res) => {
   });
 
 
-router.put('/', (req, res) => {
+router.put('/:film', (req, res) => {
 
-  const {film} = req.body;
   const id = _.uniqueId();
+  const {film} = req.params;
   films.push({id,film});
   res.json({
     message: `Just added ${id}`,
     film: film
-  })
+  });
 
 });
 
@@ -58,10 +65,23 @@ router.post('/:id', (req, res) => {
   res.json({
     message: `Just updated ${id} with ${film}`,
     film: id, film
-  })
+  });
 
-})
+});
   
+router.delete ('/:id', (req, res) => {
+  const { id } = req.params;
+  _.remove(films, ["id",id]);
+  res.json({
+    message : `Just removed ${id}`
+  });
+});
+
+
+fetchMovie() {
+  return axios
+  .get(`${API_URL}?i=tt3896198&apikey=${API_KEY}`) 
+}
 
   
   module.exports = router;
